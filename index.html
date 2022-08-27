@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://scartch-followers.hjhjhjhjjhjh.repl.co/logo.png" rel="icon"/>
+    <style id="pfpstyle">
+      #pfp{
+        display: none;
+      }
+    </style>
+    <style>
+      .header {
+  background-color: #9933cc;
+  color: #ffffff;
+  padding: 15px;
+  display: flex;
+  vertical-align: middle;
+  font-family: "Lucida Sans", sans-serif;
+}
+      /* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: whitesmoke; 
+  border-radius: 15px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  border-radius: 15px;
+}
+      /* Buttons */
+::-webkit-scrollbar-button:single-button {
+  background-color: grey;
+  display: block;
+  border-style: solid;
+  height: 13px;
+  width: 16px;
+}
+/* Up */
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+  border-width: 0 8px 8px 8px;
+  border-color: transparent transparent #555555 transparent;
+}
+
+::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+  border-color: transparent transparent #777777 transparent;
+}
+/* Down */
+::-webkit-scrollbar-button:single-button:vertical:increment {
+  border-width: 8px 8px 0 8px;
+  border-color: #555555 transparent transparent transparent;
+}
+
+::-webkit-scrollbar-button:vertical:single-button:increment:hover {
+  border-color: #777777 transparent transparent transparent;
+}
+    </style>
+    <body>
+      <div class="header">
+  <h1><a href="https://the-scratchdbstats.hjhjhjhjjhjh.repl.co/"><img src="https://the-scratchdbstats.hjhjhjhjjhjh.repl.co/logo.png"></a></h1>
+</div>
+    </body>
+  </head>
+</html>
+
+
+
+<div style="margin: 20px 20px 20px 20px;">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>user status</title>
+  <link rel="icon" href="https://scartch-followers.hjhjhjhjjhjh.repl.co/logo.png"/>
+  <style>
+    body{
+  background-color: lightgoldenrodyellow;
+  background-size: cover;
+  text-align: center;
+}
+.container{
+  background-color: skyblue;
+  border-radius: 15px;
+  text-align: center;
+  font-family: merriweather;
+  height: max-content;
+  font-size: 50px;
+  width: 100%;
+}
+.input{
+  text-align: center;
+  background-color: white;
+  border-radius: 15px;
+  height: 50px;
+}
+.submit{
+  border-radius: 15px;
+  font-family: helios;
+  height: 43px;
+  width: 70px;
+  font-size: 17px;
+}
+.input_text{
+  border-radius: 7px;
+  height: 46px;
+  font-size: 20px;
+}
+.min-max{
+  color: darkblue;
+}
+.text{
+  color: red;
+}
+.card{
+  color: red;
+}
+.name{
+  color: black;
+}
+i img{
+  height: 50px;
+  width: 50px;
+}
+  </style>
+</head>
+<body>
+    <div class="input">
+      <input type="text" placeholder="Enter the username" class="input_text" id="user">
+      <input type="submit" value="Submit" class="submit">
+    </div>
+  <div class="container">
+    <div class="card">
+      <img src="" width="200" id="pfp" height="200" alt="" style="margin: 10px 10px;">
+      <a href="" id="scratch-link"><h1 class="username" id="username"></h1></a>
+      <p class="bio" id="bio"></p>
+      <p class="work" id="work"></p>
+      <p class="followers" id="followers"></p>
+      <p class="following" id="following"></p>
+      <p class="country" id="country"></p>
+      <p class="status" id="status"></p>
+      <p class="joined" id="joined"></p>
+    </div>
+  </div>
+<script>
+  var input = document.querySelector('.input_text');
+var main = document.querySelector('#username');
+  var bio = document.querySelector('#bio');
+  var work = document.querySelector('#work');
+  var followers = document.querySelector('#followers');
+  var following = document.querySelector('#following');
+  var country = document.querySelector('#country');
+var button = document.querySelector('.submit');
+
+button.addEventListener('click', function(name){
+fetch('https://scratchdb.lefty.one/v2/user/info/'+input.value)
+.then(response => response.json())
+.then(data => {
+  var followerValue = data['followers'];
+  var followingValue = data['following'];
+  
+  followers.innerHTML = "followers - "+followerValue;
+  following.innerHTML = "following - "+followingValue;
+  document.querySelector('#status').innerHTML = "status - "+data['status'];
+
+})
+  fetch('https://periscope-api.vercel.app/api/users/'+input.value)
+    .then(response => response.json())
+    .then((data) => {
+      var imgSrc = data.profile.images['90x90'];
+      document.getElementById("pfp").src=imgSrc;
+      document.getElementById("bio").innerText = "bio - "+data.profile.bio || "N/A";
+      document.getElementById("work").innerText = "wiwo - "+data.profile.status || "N/A";
+      document.getElementById("scratch-link").href = `https://scratch.mit.edu/users/`+input.value;
+      document.getElementById("username").innerText = data.username;
+      document.getElementById("pfpstyle").innerText = "";
+      document.getElementById("country").innerText = "country - "+data.profile.country;
+
+      let daysOld = Math.floor((new Date().getTime() - new Date(data.history.joined).getTime()) / (1000 * 60 * 60 * 24));
+      document.getElementById("joined").innerText = "joined - "+daysOld + " days ago (" + data.history.joined + ")";
+    })
+
+
+})
+  
+
+  
+</script>
+</body>
+</html>
+</body>
+</html>
+</div>
